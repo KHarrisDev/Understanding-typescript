@@ -10,4 +10,11 @@ console.log("Sending...");
 // run "tsc -w" to enter watch mode
 
 // ! See tsconfig.json
+let logged;
 
+function sendAnalytics(data: string) {
+  console.log(data);
+  logged = true;
+}
+
+sendAnalytics('The data');
