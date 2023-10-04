@@ -195,7 +195,7 @@
 // }
 
 // const combinedTranactions1 = add(20, 36); // 56
-// const combinedTranactions2 = add('Mike', 'Vic'); // Error b/c types for parameters are set to number
+// const combinedTranactions2 = add('Mike', 'Vic');
 // console.log(combinedTranactions1);
 // console.log(combinedTranactions2);
 
@@ -209,28 +209,192 @@
 // The literal type is the resultConversion parameter
 // We set the union type in resultConversion to 2 Literal types (literal types don't have to be the product of a union type)
 // If user enters as-number or as-string the data type will be converted accordingly in the add function
-function add(transaction1: string | number, transaction2: string | number, resultConversion: 'as-number' | 'as-text') {
-  let transResult;
-  if (typeof transaction1 === "number" && typeof transaction2 === "number" || resultConversion === "as-number") {
-    transResult = +transaction1 + +transaction2; //converts to number
-  } else {
-    transResult = transaction1.toString() + transaction2.toString(); //converts to string
-  }
-  return transResult;
-  // if (resultConversion === "as-number"){
-  //   return +transResult
-  // } else {
-  //   return transResult.toString();
-  // }
-}
+// function add(transaction1: string | number, transaction2: string | number, resultConversion: 'as-number' | 'as-text') {
+//   let transResult;
+//   if (typeof transaction1 === "number" && typeof transaction2 === "number" || resultConversion === "as-number") {
+//     transResult = +transaction1 + +transaction2; //converts to number
+//   } else {
+//     transResult = transaction1.toString() + transaction2.toString(); //converts to string
+//   }
+//   return transResult;
+//   // if (resultConversion === "as-number"){
+//   //   return +transResult
+//   // } else {
+//   //   return transResult.toString();
+//   // }
+// }
 
-const combinedTranactions1 = add(20, 36, "as-number");
-const combinedTranactions2 = add('Mike', 'Vic', "as-text"); 
-console.log(combinedTranactions1);
-console.log(combinedTranactions2);
+// const combinedTranactions1 = add(20, 36, "as-number");
+// const combinedTranactions2 = add('Mike', 'Vic', "as-text"); 
+// console.log(combinedTranactions1);
+// console.log(combinedTranactions2);
 
 
 
 
 
 //*******Type alias/custom types */
+// // Type alias can be used to give a type an alias name
+// // We use the alias to name unions in the following example then add then to the parameter of add()
+// // ?Example
+// type numType = number; //alias for number type
+// type strNumUnionType = string | numType; //alias used in union alias
+// type numTextUnionLiteral = 'as-number' | 'as-text'; //union alias
+
+// function add(transaction1: strNumUnionType, transaction2: strNumUnionType, resultConversion: numTextUnionLiteral) {
+//   let transResult;
+//   if (typeof transaction1 === "number" && typeof transaction2 === "number" || resultConversion === "as-number") {
+//     transResult = +transaction1 + +transaction2; //converts to number
+//   } else {
+//     transResult = transaction1.toString() + transaction2.toString(); //converts to string
+//   }
+//   return transResult;
+//   // if (resultConversion === "as-number"){
+//   //   return +transResult
+//   // } else {
+//   //   return transResult.toString();
+//   // }
+// }
+
+// const combinedTranactions1 = add(20, 36, "as-number");
+// const combinedTranactions2 = add('Mike', 'Vic', "as-text"); 
+// console.log(combinedTranactions1);
+// console.log(combinedTranactions2);
+
+// // ?Example 2 
+// type User = { name: string } | string;
+// let u1: User = {name: 'Max'};
+// u1 = 'Michael';
+// console.log(u1);
+
+
+
+
+
+
+// ************* Function Return Types, Voids & Undefined types
+// The following function infers that the type is a number b/c the type of both parameters are a number
+// function add(n1: number, n2: number) {
+//   return n1 + n2;
+// }
+// The following function infers that the type is a string b/c the type of both parameters are a string
+// function add2(n1: number, n2: number) {
+//   return n1.toString() + n2.toString();
+// }
+// The following function is an error. It's assigned a type but it's best to infer types most times b/c errors from other types in function
+// function add3(n1: number, n2: number): string {
+//   return n1 + n2;
+// }
+
+// PrintResult type is void b/c it doesn't return anything
+// console.log() does not return anything...
+// function add4(n1: number, n2: number) {
+//   return n1 + n2;
+// } // inferred type is number
+
+// function printResult(num: number) {
+//   console.log('Result: ' + num);
+// } // inferred type is void
+// printResult(add4(3,4));
+
+// This variable is forever undefined
+// let randomResult: undefined;
+
+// Error occurs in the following b/c TypeScript is expecting a return statement from functions
+// Void doesn't return anything then typescript understands.
+// function printResult2(num: number): undefined {
+//   console.log('Result: ' + num);
+//   // return; //this doesn't produce an error 
+// }
+
+
+
+
+
+// ************Functions types
+// Function types are types that describe a functions regarding parameters and return values of the functions
+// ?Example:
+// function add(n1: number, n2: number) {
+//   return n1 + n2;
+// }
+// function printResult(num: number) {
+//   console.log('Result: ' + num);
+// } 
+
+// printResult(add(5, 12)); //Result: 17
+
+// combineValues has a value of any which means we can store any type in this variable
+// store a function in this variable
+// let combineValues;
+// combineValues = add;
+// // combineValues = 5; //this is an error in runtime since TypeScript doesn't detect this
+// console.log(combineValues(5, 12));
+
+// ?Example 2:
+// make a function type by defining parameter types and return types
+// 
+
+
+
+
+
+// *************Function Types and Callbacks
+// function addAndHandle(n1: number, n2: number, callback: (num: number) => void) {
+//   const result = n1 + n2;
+//   callback(result);
+// }
+
+// addAndHandle(10, 20, (result) => {
+//   console.log(result);
+// });
+
+// *************Unknown Type
+// let userInput: unknown;
+
+// unknown type allows you to pass any type of variable
+// userInput = 5;
+// userInput = "foo";
+
+// even though username and userInput are both strings, this is a error b/c unknown type isn't guaranteed to be a string
+// userInput can hold any value b/c it's unknown
+// let username: string;
+// username = userInput;
+
+// An extra type check can be assigned to unknown in order to have username = userInput
+// if (typeof userInput === 'string') {
+//   username = userInput;
+// }
+// ! Unknown is more restrictive than any b/c type checking can be used when assigning unknown types
+// ! If you know the type of the variable, you should assign that type instead of using unknown type
+
+
+
+
+
+
+
+// *************Never  Type
+function generateError(message: string, code: number) {
+  throw {message: message, code: code};
+}
+
+generateError("This is an error. Error Code: ", 100);
+// This function never returns anything b/c the applicatin crashes
+// by default this is inferred as a void type but if it shows when the app crashes then explicitely assign it as never
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
